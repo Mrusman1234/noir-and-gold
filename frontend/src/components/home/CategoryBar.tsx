@@ -36,11 +36,11 @@ const DEPARTMENTS: DepartmentItem[] = [
     imageUrl: "/images/categories/cat-festive-shawls.jpg",
   },
   {
-    id: "bespoke",
-    title: "Couture & Pret",
+    id: "footwear",
+    title: "Footwear",
     subtitle: "Explore Collection",
     href: "/shop",
-    imageUrl: "/images/categories/cat-men-kurta.jpg",
+    imageUrl: "https://images.unsplash.com/photo-1543163521-1bf539c55dd2?q=80&w=600&auto=format&fit=crop",
   },
 ];
 
@@ -48,24 +48,24 @@ export function CategoryBar() {
   return (
     <section
       aria-label="Department Quick Navigation"
-      className="border-b border-border-subtle bg-surface-white py-6 sm:py-8"
+      className="border-b border-border-subtle bg-surface-white/90 py-5 sm:py-6 backdrop-blur-xs"
     >
       <Container size="xl">
-        <div className="grid grid-cols-2 gap-3 sm:gap-6 lg:grid-cols-4">
+        <div className="grid grid-cols-2 divide-y divide-border-subtle/80 sm:divide-y-0 sm:divide-x sm:grid-cols-4 border border-border-subtle/70 rounded-2xl bg-canvas-bg/30 overflow-hidden shadow-xs">
           {DEPARTMENTS.map((dept) => (
             <Link
               key={dept.id}
               href={dept.href}
-              className="group flex items-center gap-4 rounded-xl border border-border-subtle/80 bg-canvas-bg/50 p-3 sm:p-4 transition-all duration-300 hover:border-accent-gold/40 hover:bg-surface-white hover:shadow-md focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-text-primary"
+              className="group flex items-center gap-3.5 p-3.5 sm:p-5 transition-all duration-300 hover:bg-surface-white hover:shadow-xs focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-text-primary"
             >
               {/* Thumbnail Frame */}
-              <div className="relative h-14 w-14 shrink-0 overflow-hidden rounded-lg bg-surface-subtle sm:h-16 sm:w-16">
+              <div className="relative h-14 w-14 shrink-0 overflow-hidden rounded-xl bg-surface-subtle sm:h-16 sm:w-16 border border-border-subtle/40">
                 <Image
                   src={dept.imageUrl}
                   alt={dept.title}
                   fill
                   sizes="64px"
-                  className="object-cover object-center transition-transform duration-500 ease-out group-hover:scale-110"
+                  className="object-cover object-center transition-transform duration-500 ease-out group-hover:scale-108"
                 />
               </div>
 
@@ -77,7 +77,7 @@ export function CategoryBar() {
                 <span className="inline-flex items-center gap-1 text-[11px] font-medium tracking-wide text-text-muted transition-colors group-hover:text-text-primary">
                   {dept.subtitle}
                   <span
-                    className="inline-block transition-transform duration-300 group-hover:translate-x-1"
+                    className="inline-block transition-transform duration-300 group-hover:translate-x-1 text-accent-gold"
                     aria-hidden="true"
                   >
                     →
