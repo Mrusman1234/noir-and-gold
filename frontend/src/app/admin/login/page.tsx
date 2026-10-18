@@ -1,16 +1,35 @@
 "use client";
 
 import React, { useState } from "react";
-import { useRouter } from "next/navigation";
 import Link from "next/link";
 import { BRAND_NAME } from "@/lib/constants";
 
 export default function AdminLoginPage() {
-  const router = useRouter();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
+
+  // MFA Challenge State
+  const [mfaRequired, setMfaRequired] = useState(false);
+  const [mfaToken, setMfaToken] = useState("");
+  const [mfaCode, setMfaCode] = useState("");
+
+  const navigateToDestination = () => {
+    const params = typeof window !== "undefined" ? new URLSearchParams(window.location.search) : null;
+    const returnUrl = params?.get("returnUrl");
+    const target = returnUrl && returnUrl.startsWith("/admin") && !returnUrl.startsWith("/admin/login")
+      ? returnUrl
+      : "/admin";
+    // Full window navigation guarantees Server Components in the layout receive the fresh cookie
+    window.location.href = target;
+  };
+
+  const handleFillDemoCredentials = () => {
+    setEmail("admin@noirandgold.com");
+    setPassword("Admin12345!");
+    setErrorMessage("");
+  };
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -18,6 +37,26 @@ export default function AdminLoginPage() {
     setErrorMessage("");
 
     try {
+      if (mfaRequired) {
+        // Step 2: Verify MFA code
+        const res = await fetch("/api/v1/admin/auth/mfa/verify", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ mfaToken, totpCode: mfaCode.trim() }),
+        });
+
+        const data = await res.json();
+        if (!res.ok || !data.success) {
+          setErrorMessage(data?.error?.message || "Invalid authenticator code. Please try again.");
+          setLoading(false);
+          return;
+        }
+
+        navigateToDestination();
+        return;
+      }
+
+      // Step 1: Standard email + password authentication
       const res = await fetch("/api/v1/admin/auth/login", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
@@ -33,8 +72,16 @@ export default function AdminLoginPage() {
         return;
       }
 
-      // Successful login -> navigate to Dashboard
-      router.push("/admin");
+      // Check if MFA is required
+      if (data.mfaRequired && data.mfaToken) {
+        setMfaRequired(true);
+        setMfaToken(data.mfaToken);
+        setLoading(false);
+        return;
+      }
+
+      // Successful login -> navigate to destination
+      navigateToDestination();
     } catch {
       setErrorMessage("Network error connecting to authentication server. Please try again.");
       setLoading(false);
@@ -65,11 +112,34 @@ export default function AdminLoginPage() {
         {/* Login Card */}
         <div className="bg-surface-white border border-border-subtle rounded-2xl p-6 sm:p-8 shadow-xs">
           <h1 className="font-serif text-lg text-text-primary font-bold tracking-wide mb-1">
-            Sign In to Portal
+            {mfaRequired ? "Two-Factor Verification" : "Sign In to Portal"}
           </h1>
           <p className="text-xs text-text-secondary mb-6">
-            Enter your atelier administrative credentials to continue.
+            {mfaRequired
+              ? "Enter the 6-digit verification code from your authenticator app."
+              : "Enter your atelier administrative credentials to continue."}
           </p>
+
+          {/* Quick-Fill Helper Badge */}
+          {!mfaRequired && (
+            <div className="mb-6 p-3 bg-surface-subtle/80 border border-border-subtle rounded-xl flex items-center justify-between gap-3 text-xs">
+              <div className="min-w-0">
+                <span className="font-semibold text-text-primary block text-[11px] uppercase tracking-wider">
+                  Default Credentials
+                </span>
+                <span className="text-[11px] text-text-secondary font-mono truncate block">
+                  admin@noirandgold.com / Admin12345!
+                </span>
+              </div>
+              <button
+                type="button"
+                onClick={handleFillDemoCredentials}
+                className="shrink-0 px-2.5 py-1 text-[10px] font-semibold uppercase tracking-wider bg-surface-white border border-border-subtle rounded-md hover:bg-surface-subtle transition-colors cursor-pointer text-text-primary"
+              >
+                Auto-fill
+              </button>
+            </div>
+          )}
 
           {errorMessage && (
             <div
@@ -84,41 +154,65 @@ export default function AdminLoginPage() {
           )}
 
           <form onSubmit={handleSubmit} className="space-y-4">
-            <div>
-              <label
-                htmlFor="admin-email"
-                className="block text-xs font-semibold uppercase tracking-wider text-text-secondary mb-1.5"
-              >
-                Email Address
-              </label>
-              <input
-                id="admin-email"
-                type="email"
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-                placeholder="you@example.com"
-                required
-                className="w-full bg-surface-white border border-border-subtle rounded-xl px-4 py-2.5 text-sm text-text-primary placeholder:text-text-secondary/40 focus:outline-none focus:ring-1 focus:ring-text-primary transition-colors"
-              />
-            </div>
+            {!mfaRequired ? (
+              <>
+                <div>
+                  <label
+                    htmlFor="admin-email"
+                    className="block text-xs font-semibold uppercase tracking-wider text-text-secondary mb-1.5"
+                  >
+                    Email Address
+                  </label>
+                  <input
+                    id="admin-email"
+                    type="email"
+                    value={email}
+                    onChange={(e) => setEmail(e.target.value)}
+                    placeholder="you@example.com"
+                    required
+                    className="w-full bg-surface-white border border-border-subtle rounded-xl px-4 py-2.5 text-sm text-text-primary placeholder:text-text-secondary/40 focus:outline-none focus:ring-1 focus:ring-text-primary transition-colors"
+                  />
+                </div>
 
-            <div>
-              <label
-                htmlFor="admin-password"
-                className="block text-xs font-semibold uppercase tracking-wider text-text-secondary mb-1.5"
-              >
-                Password
-              </label>
-              <input
-                id="admin-password"
-                type="password"
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
-                placeholder="••••••••••••"
-                required
-                className="w-full bg-surface-white border border-border-subtle rounded-xl px-4 py-2.5 text-sm text-text-primary placeholder:text-text-secondary/40 focus:outline-none focus:ring-1 focus:ring-text-primary transition-colors"
-              />
-            </div>
+                <div>
+                  <label
+                    htmlFor="admin-password"
+                    className="block text-xs font-semibold uppercase tracking-wider text-text-secondary mb-1.5"
+                  >
+                    Password
+                  </label>
+                  <input
+                    id="admin-password"
+                    type="password"
+                    value={password}
+                    onChange={(e) => setPassword(e.target.value)}
+                    placeholder="••••••••••••"
+                    required
+                    className="w-full bg-surface-white border border-border-subtle rounded-xl px-4 py-2.5 text-sm text-text-primary placeholder:text-text-secondary/40 focus:outline-none focus:ring-1 focus:ring-text-primary transition-colors"
+                  />
+                </div>
+              </>
+            ) : (
+              <div>
+                <label
+                  htmlFor="admin-mfa-code"
+                  className="block text-xs font-semibold uppercase tracking-wider text-text-secondary mb-1.5"
+                >
+                  6-Digit Authenticator Code
+                </label>
+                <input
+                  id="admin-mfa-code"
+                  type="text"
+                  maxLength={6}
+                  value={mfaCode}
+                  onChange={(e) => setMfaCode(e.target.value.replace(/\D/g, ""))}
+                  placeholder="000000"
+                  required
+                  autoFocus
+                  className="w-full text-center tracking-[0.5em] font-mono text-lg bg-surface-white border border-border-subtle rounded-xl px-4 py-2.5 text-text-primary placeholder:text-text-secondary/40 focus:outline-none focus:ring-1 focus:ring-text-primary transition-colors"
+                />
+              </div>
+            )}
 
             <button
               type="submit"
@@ -131,9 +225,23 @@ export default function AdminLoginPage() {
                   <span>Verifying Credentials...</span>
                 </>
               ) : (
-                <span>Access Management Portal</span>
+                <span>{mfaRequired ? "Confirm & Access Portal" : "Access Management Portal"}</span>
               )}
             </button>
+
+            {mfaRequired && (
+              <button
+                type="button"
+                onClick={() => {
+                  setMfaRequired(false);
+                  setMfaCode("");
+                  setErrorMessage("");
+                }}
+                className="w-full text-center text-xs text-text-secondary hover:text-text-primary transition-colors pt-1"
+              >
+                ← Back to Password Login
+              </button>
+            )}
           </form>
         </div>
 

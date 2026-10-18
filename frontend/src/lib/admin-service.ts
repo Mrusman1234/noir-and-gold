@@ -36,8 +36,18 @@ interface StoredAdminAccount {
   passwordHash: string;
 }
 
-const ADMIN_ACCOUNTS = new Map<string, StoredAdminAccount>();
-const ACTIVE_SESSIONS = new Map<string, AdminSession>();
+const globalForAdmin = globalThis as typeof globalThis & {
+  noirAdminAccounts?: Map<string, StoredAdminAccount>;
+  noirActiveSessions?: Map<string, AdminSession>;
+};
+
+const ADMIN_ACCOUNTS = globalForAdmin.noirAdminAccounts ?? new Map<string, StoredAdminAccount>();
+const ACTIVE_SESSIONS = globalForAdmin.noirActiveSessions ?? new Map<string, AdminSession>();
+
+if (process.env.NODE_ENV !== "production") {
+  globalForAdmin.noirAdminAccounts = ADMIN_ACCOUNTS;
+  globalForAdmin.noirActiveSessions = ACTIVE_SESSIONS;
+}
 
 function hashPassword(password: string, salt: string): string {
   return crypto.scryptSync(password, salt, 32).toString("hex");

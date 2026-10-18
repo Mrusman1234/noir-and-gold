@@ -20,7 +20,7 @@ export default async function AdminRootLayout({
 }) {
   const headerList = await headers();
   const pathname = headerList.get("x-admin-pathname") || "";
-  const isLoginPage = pathname === "/admin/login";
+  const isLoginPage = pathname === "/admin/login" || pathname.startsWith("/admin/login");
 
   const cookieStore = await cookies();
   const token = cookieStore.get(ADMIN_COOKIE_NAME)?.value;
@@ -30,7 +30,7 @@ export default async function AdminRootLayout({
     if (user) {
       redirect("/admin");
     }
-    return <AdminLayoutClient initialUser={null}>{children}</AdminLayoutClient>;
+    return <>{children}</>;
   }
 
   // Enforce server-side authentication: an invalid, absent, or expired token redirects

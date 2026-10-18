@@ -58,7 +58,8 @@ export function AdminLayoutClient({ children, initialUser }: AdminLayoutClientPr
       console.error("Logout error:", err);
     } finally {
       setUser(null);
-      router.push("/admin/login");
+      router.replace("/admin/login");
+      router.refresh();
     }
   };
 
