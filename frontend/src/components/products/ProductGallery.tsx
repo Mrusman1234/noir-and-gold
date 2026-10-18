@@ -41,17 +41,37 @@ export function ProductGallery({
     setActiveIndex((prev) => (prev === displayImages.length - 1 ? 0 : prev + 1));
   };
 
+  const [isZooming, setIsZooming] = useState(false);
+  const [zoomPos, setZoomPos] = useState({ x: 50, y: 50 });
+
+  const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
+    const rect = e.currentTarget.getBoundingClientRect();
+    const x = ((e.clientX - rect.left) / rect.width) * 100;
+    const y = ((e.clientY - rect.top) / rect.height) * 100;
+    setZoomPos({ x, y });
+  };
+
   return (
     <div className="flex flex-col gap-4 w-full">
-      {/* Primary 3:4 Viewport */}
-      <div className="group relative aspect-[3/4] w-full overflow-hidden rounded-xl border border-border-subtle bg-surface-subtle shadow-xs">
+      {/* Primary 3:4 Viewport with Fabric Magnification */}
+      <div
+        onMouseEnter={() => setIsZooming(true)}
+        onMouseLeave={() => setIsZooming(false)}
+        onMouseMove={handleMouseMove}
+        className="group relative aspect-[3/4] w-full overflow-hidden rounded-xl border border-border-subtle bg-surface-subtle shadow-xs cursor-zoom-in"
+      >
         <Image
           src={currentImage.url}
           alt={currentImage.alt || title}
           fill
           priority
           sizes="(max-width: 1024px) 100vw, 50vw"
-          className="object-cover object-center transition-all duration-500 ease-out"
+          style={{
+            transformOrigin: `${zoomPos.x}% ${zoomPos.y}%`,
+          }}
+          className={`object-cover object-center transition-transform duration-300 ease-out ${
+            isZooming ? "scale-125" : "scale-100"
+          }`}
         />
 
         {/* Micro Badges (Top-Left) */}

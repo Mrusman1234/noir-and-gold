@@ -7,12 +7,15 @@ import { Container } from "@/components/layout/Container";
 import { BRAND_NAME, OFFICIAL_WHATSAPP_LINK } from "@/lib/constants";
 import { useCart } from "@/context/CartContext";
 import { cn } from "@/lib/utils";
+import { Heart } from "lucide-react";
 
 const NAV = [
+  { href: "/", label: "Home" },
+  { href: "/shop", label: "Shop" },
   { href: "/shop/women", label: "Women" },
   { href: "/shop/men", label: "Men" },
-  { href: "/shop?sort=newest", label: "New Arrivals" },
-  { href: "/shop", label: "Collections" },
+  { href: "/shop?sort=newest", label: "Collections" },
+  { href: "/about", label: "About" },
 ];
 
 export function Header() {
@@ -220,6 +223,14 @@ export function Header() {
               <svg className="h-5 w-5" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor">
                 <path strokeLinecap="round" strokeLinejoin="round" d="M15.75 6a3.75 3.75 0 11-7.5 0 3.75 3.75 0 017.5 0zM4.501 20.118a7.5 7.5 0 0114.998 0A17.933 17.933 0 0112 21.75c-2.676 0-5.216-.584-7.499-1.632z" />
               </svg>
+            </Link>
+
+            <Link
+              href="/shop"
+              aria-label="Wishlist saved pieces"
+              className="flex min-h-[44px] min-w-[44px] items-center justify-center p-2 text-text-secondary transition-colors hover:text-text-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-text-primary"
+            >
+              <Heart className="h-5 w-5 stroke-[1.5]" />
             </Link>
 
             <Link

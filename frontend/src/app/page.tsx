@@ -1,8 +1,9 @@
 import React from "react";
 import { HeroSection } from "@/components/home/HeroSection";
-import { EditorialMarquee } from "@/components/home/EditorialMarquee";
-import { CategoryShowcase } from "@/components/home/CategoryShowcase";
+import { CategoryBar } from "@/components/home/CategoryBar";
 import { FeaturedSection } from "@/components/home/FeaturedSection";
+import { PromotionalBanner } from "@/components/home/PromotionalBanner";
+import { CategoryShowcase } from "@/components/home/CategoryShowcase";
 import { LookbookSection } from "@/components/home/LookbookSection";
 import { BrandStorySection } from "@/components/home/BrandStorySection";
 import { TrustFeaturesSection } from "@/components/home/TrustFeaturesSection";
@@ -12,31 +13,34 @@ import { FinalCtaSection } from "@/components/home/FinalCtaSection";
 export default function HomePage() {
   return (
     <div className="flex flex-col w-full bg-canvas-bg text-text-primary">
-      {/* 1. High-Impact Editorial Fashion Hero */}
+      {/* 1. Signature 3D Luxury Fashion Hero with Metallic Ribbon */}
       <HeroSection />
 
-      {/* 2. Artisanal atelier trust & craft marquee ribbon */}
-      <EditorialMarquee />
+      {/* 2. 4-Department Quick Access Strip (Women, Men, Accessories, Couture) */}
+      <CategoryBar />
 
-      {/* 3. Men's and Women's Category Showcase */}
-      <CategoryShowcase />
-
-      {/* 4. Featured Collection & New Arrivals Grid */}
+      {/* 3. Featured Collection / Our Best Sellers Grid */}
       <FeaturedSection />
 
-      {/* 5. Explore Women's & Men's Edits */}
+      {/* 4. Luxury Contrast Promotional Banner (Up to 40% Off) */}
+      <PromotionalBanner />
+
+      {/* 5. Comprehensive Department Showcase & Editorial Tiles */}
+      <CategoryShowcase />
+
+      {/* 6. Explore Women's & Men's Editorial Lookbook */}
       <LookbookSection />
 
-      {/* 4. Atelier Craftsmanship & Brand Story */}
+      {/* 7. Atelier Heritage & Craftsmanship Story */}
       <BrandStorySection />
 
-      {/* 5. Regional Trust, COD & Fulfillment Guarantees */}
+      {/* 8. Regional Trust, Nationwide COD & Fulfillment Guarantees */}
       <TrustFeaturesSection />
 
-      {/* 6. Atelier Gazette Newsletter Circle */}
+      {/* 9. Atelier Gazette Circle */}
       <NewsletterSection />
 
-      {/* 7. Final Master Catalog Call to Action */}
+      {/* 10. Master Catalog Call to Action */}
       <FinalCtaSection />
     </div>
   );

@@ -313,6 +313,33 @@ textarea:focus-visible {
   transform: scale(1.03);
 }
 
+/* Luxury Gold Metallic Shimmer Utility */
+@keyframes metallic-shimmer {
+  0% {
+    background-position: -200% 0;
+  }
+  100% {
+    background-position: 200% 0;
+  }
+}
+
+.text-gold-gradient {
+  background: linear-gradient(135deg, #b99a62 0%, #e2cd9d 50%, #9e7f45 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.metallic-sheen {
+  background: linear-gradient(
+    90deg,
+    rgba(255, 255, 255, 0) 0%,
+    rgba(255, 255, 255, 0.25) 50%,
+    rgba(255, 255, 255, 0) 100%
+  );
+  background-size: 200% 100%;
+  animation: metallic-shimmer 6s infinite;
+}
+
 /* Reduced Motion Compliance */
 @media (prefers-reduced-motion: reduce) {
   .animate-fade-up,
