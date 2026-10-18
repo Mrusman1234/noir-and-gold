@@ -1,0 +1,354 @@
+// Prisma Schema for NOIR & GOLD Pakistani Luxury Apparel E-Commerce
+// Architecture specification: docs/architecture.md
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+model Category {
+  id          String    @id @default(uuid())
+  name        String
+  slug        String    @unique
+  description String?
+  imageUrl    String?
+  audience    String?   // "women" | "men" | "unisex"
+  isActive    Boolean   @default(true)
+  deletedAt   DateTime?
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+
+  products    Product[]
+
+  @@index([deletedAt])
+}
+
+model Product {
+  id               String           @id @default(uuid())
+  categoryId       String
+  title            String
+  slug             String           @unique
+  description      String
+  fabricDetails    String?
+  careInstructions String?
+  audience         String?          // "women" | "men" | "unisex"
+  primaryImageUrl  String
+  hoverImageUrl    String?
+  pricePkr         Float
+  salePricePkr     Float?
+  isNew            Boolean          @default(false)
+  isLimited        Boolean          @default(false)
+  isFeatured       Boolean          @default(false)
+  status           String           @default("PUBLISHED") // "DRAFT" | "PUBLISHED" | "ARCHIVED"
+  rating           Float            @default(4.9)
+  reviewCount      Int              @default(0)
+  deletedAt        DateTime?
+  createdAt        DateTime         @default(now())
+  updatedAt        DateTime         @updatedAt
+
+  category         Category         @relation(fields: [categoryId], references: [id])
+  images           ProductImage[]
+  variants         ProductVariant[]
+  orderItems       OrderItem[]      @relation("OrderItemProduct")
+
+  @@index([deletedAt])
+}
+
+model ProductImage {
+  id           String   @id @default(uuid())
+  productId    String
+  url          String
+  altText      String
+  displayOrder Int      @default(0)
+  isPrimary    Boolean  @default(false)
+  createdAt    DateTime @default(now())
+
+  product      Product  @relation(fields: [productId], references: [id], onDelete: Cascade)
+}
+
+model ProductVariant {
+  id            String   @id @default(uuid())
+  productId     String
+  sku           String   @unique
+  size          String   // XS | S | M | L | XL | Standard | 38 | 40 | 42 | 44
+  colorName     String
+  colorHex      String
+  pricePkr      Float
+  salePricePkr  Float?
+  stockQuantity Int      @default(0)
+  isActive      Boolean  @default(true)
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+
+  product       Product  @relation(fields: [productId], references: [id], onDelete: Cascade)
+  orderItems    OrderItem[] @relation("OrderItemVariant")
+  inventoryReservations InventoryReservation[]
+}
+
+model ShippingZone {
+  id               String   @id @default(uuid())
+  zoneName         String   // Local Karachi | Major Metros | Nationwide
+  shippingFeePkr   Float
+  freeThresholdPkr Float?
+  estimatedDays    String
+  isActive         Boolean  @default(true)
+  createdAt        DateTime @default(now())
+}
+
+model Order {
+  id                    String          @id @default(uuid())
+  orderReference        String          @unique
+  verificationTokenHash String          @unique
+  idempotencyKey        String          @unique
+
+  customerFullName      String
+  customerPhone         String
+  customerEmail         String?
+  shippingProvince      String
+  shippingCity          String
+  shippingArea          String
+  shippingStreetAddress String
+  shippingPostalCode    String?
+  shippingLandmark      String?
+  shippingInstructions  String?
+
+  subtotalPkr           Int
+  discountTotalPkr      Int             @default(0)
+  deliveryFeePkr        Int
+  totalPkr              Int
+  currency              String          @default("PKR")
+  paymentMethod         String          @default("CASH_ON_DELIVERY")
+  paymentStatus         String          @default("PENDING")
+  orderStatus           String          @default("PENDING")
+
+  courierName           String?
+  courierTrackingNumber String?
+  dispatchedAt          DateTime?
+  cancellationReason    String?
+  deletedAt             DateTime?
+
+  createdAt             DateTime        @default(now())
+  updatedAt             DateTime        @updatedAt
+
+  items                 OrderItem[]
+  auditLogs             OrderAuditLog[]
+  inventoryAuditLogs    InventoryAuditLog[]
+  paymentAttempts       PaymentAttempt[]
+  inventoryReservations InventoryReservation[]
+
+  @@index([orderStatus, createdAt])
+  @@index([paymentStatus, createdAt])
+  @@index([customerPhone, createdAt])
+  @@index([customerFullName])
+  @@index([shippingCity])
+  @@index([courierTrackingNumber])
+  @@index([deletedAt])
+}
+
+model OrderItem {
+  id                  String         @id @default(uuid())
+  orderId             String
+  order               Order          @relation(fields: [orderId], references: [id], onDelete: Cascade)
+
+  // Immutable order-time identifiers and product details.
+  productId           String
+  variantId           String
+  sku                 String
+  productTitle        String
+  productSlug         String
+  categoryName        String
+  size                String
+  color               String
+  imageUrl            String
+
+  // Nullable live-catalog references; snapshots remain after catalog deletion.
+  catalogProductId    String?
+  catalogVariantId    String?
+  catalogProduct      Product?       @relation("OrderItemProduct", fields: [catalogProductId], references: [id], onDelete: SetNull)
+  catalogVariant      ProductVariant? @relation("OrderItemVariant", fields: [catalogVariantId], references: [id], onDelete: SetNull)
+
+  unitPricePkr        Int
+  quantity            Int
+  lineSubtotalPkr     Int
+  discountPkr         Int            @default(0)
+  lineTotalPkr        Int
+  createdAt           DateTime       @default(now())
+
+  @@index([orderId])
+  @@index([catalogProductId])
+  @@index([catalogVariantId])
+  @@index([productId])
+  @@index([variantId])
+}
+
+model OrderAuditLog {
+  id            String   @id @default(uuid())
+  orderId       String
+  order         Order    @relation(fields: [orderId], references: [id], onDelete: Cascade)
+  timestamp     DateTime @default(now())
+  action        String
+  performedBy   String
+  note          String?
+  previousStatus String?
+  newStatus      String?
+
+  @@index([orderId, timestamp])
+}
+
+// Inventory history keeps immutable order/catalog snapshots so it remains useful
+// even if the linked catalog variant is later removed.
+model InventoryAuditLog {
+  id              String   @id @default(uuid())
+  productId       String
+  productTitle    String
+  variantId       String
+  sku             String
+  size            String
+  colorName       String
+  previousStock   Int
+  newStock        Int
+  adjustmentDelta Int
+  reason          String
+  adjustedBy      String
+  timestamp       DateTime @default(now())
+  orderId         String?
+
+  order           Order?   @relation(fields: [orderId], references: [id], onDelete: SetNull)
+
+  @@index([variantId, timestamp])
+  @@index([orderId, timestamp])
+}
+
+// Provider-neutral payment attempt ledger. Provider identifiers are optional
+// until a provider accepts the attempt; providerPaymentKey is populated only
+// when a provider payment ID exists and keeps nullable IDs non-blocking in SQLite.
+model PaymentAttempt {
+  id                       String   @id @default(uuid())
+  orderId                  String
+  provider                 String
+  paymentMethod            String
+  status                   String   @default("CREATED")
+  amountPkr                Int
+  currency                 String   @default("PKR")
+  attemptKey               String
+  providerCheckoutId       String?
+  providerPaymentId       String?
+  providerPaymentKey      String?  @unique
+  failureCode              String?
+  failureMessage           String?
+  expiresAt                DateTime?
+  authorizedAt             DateTime?
+  capturedAt               DateTime?
+  failedAt                 DateTime?
+  cancelledAt              DateTime?
+  voidedAt                 DateTime?
+  capturedAmountPkr        Int      @default(0)
+  refundedAmountPkr        Int      @default(0)
+  refundReservedAmountPkr  Int      @default(0)
+  createdAt                DateTime @default(now())
+  updatedAt                DateTime @updatedAt
+
+  order                    Order          @relation(fields: [orderId], references: [id], onDelete: Restrict)
+  events                   PaymentEvent[]
+  refunds                  Refund[]
+
+  @@unique([orderId, attemptKey])
+  @@index([orderId, status])
+  @@index([status, expiresAt])
+  @@index([provider, providerPaymentId])
+}
+
+// Sanitized provider event ledger. Raw secrets and unredacted credentials are
+// intentionally excluded; the provider/event pair is the deduplication key.
+model PaymentEvent {
+  id                  String   @id @default(uuid())
+  paymentAttemptId    String
+  provider            String
+  providerEventId     String
+  eventType           String
+  payloadHash         String
+  signatureVerified   Boolean  @default(false)
+  processingStatus    String   @default("RECEIVED")
+  failureReason       String?
+  receivedAt          DateTime @default(now())
+  processedAt         DateTime?
+
+  paymentAttempt      PaymentAttempt @relation(fields: [paymentAttemptId], references: [id], onDelete: Restrict)
+
+  @@unique([provider, providerEventId])
+  @@index([paymentAttemptId, receivedAt])
+  @@index([processingStatus, receivedAt])
+}
+
+// Refund requests remain immutable history. Retries create new rows with new
+// request keys; providerRefundKey is populated only after provider acceptance.
+model Refund {
+  id                  String   @id @default(uuid())
+  paymentAttemptId    String
+  provider            String
+  providerRefundId    String?
+  providerRefundKey   String?  @unique
+  amountPkr           Int
+  currency            String   @default("PKR")
+  status              String   @default("REQUESTED")
+  idempotencyKey      String
+  reason              String
+  failureCode         String?
+  requestedAt         DateTime @default(now())
+  completedAt         DateTime?
+
+  paymentAttempt      PaymentAttempt @relation(fields: [paymentAttemptId], references: [id], onDelete: Restrict)
+
+  @@unique([paymentAttemptId, idempotencyKey])
+  @@index([paymentAttemptId, status])
+  @@index([provider, providerRefundId])
+}
+
+// A reservation owns a stock decrement while an online payment is pending.
+// activeReservationKey is non-null only for ACTIVE rows. SQLite unique NULL
+// semantics allow terminal reservation history while preventing two active
+// reservations for the same order/variant key.
+model InventoryReservation {
+  id                    String         @id @default(uuid())
+  orderId               String
+  productVariantId      String
+  quantity              Int
+  status                String         @default("ACTIVE")
+  activeReservationKey  String?        @unique
+  expiresAt             DateTime?
+  consumedAt            DateTime?
+  releasedAt            DateTime?
+  createdAt             DateTime       @default(now())
+  updatedAt             DateTime       @updatedAt
+
+  order                 Order          @relation(fields: [orderId], references: [id], onDelete: Restrict)
+  productVariant        ProductVariant @relation(fields: [productVariantId], references: [id], onDelete: Restrict)
+
+  @@index([orderId, status])
+  @@index([productVariantId, status])
+  @@index([status, expiresAt])
+}
+
+model SecurityAuditLog {
+  id            String    @id @default(uuid())
+  action        String
+  entityType    String
+  entityId      String
+  actorId       String
+  actorEmail    String
+  ipAddress     String?
+  userAgent     String?
+  previousState String?
+  newState      String
+  reason        String?
+  createdAt     DateTime  @default(now())
+
+  @@index([entityType, entityId])
+  @@index([actorId])
+  @@index([action])
+  @@index([createdAt])
+}

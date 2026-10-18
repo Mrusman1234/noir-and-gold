@@ -1,0 +1,47 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 800" width="100%" height="100%">
+  <defs>
+    <radialGradient id="pAnarkaliBg" cx="50%" cy="40%" r="65%">
+      <stop offset="0%" stop-color="#1C1826"/>
+      <stop offset="60%" stop-color="#14111B"/>
+      <stop offset="100%" stop-color="#0B0A0F"/>
+    </radialGradient>
+    <linearGradient id="pGold" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#E6CA65"/>
+      <stop offset="50%" stop-color="#D4AF37"/>
+      <stop offset="100%" stop-color="#AA8B2F"/>
+    </linearGradient>
+  </defs>
+
+  <rect width="600" height="800" fill="url(#pAnarkaliBg)"/>
+  <rect x="16" y="16" width="568" height="768" fill="none" stroke="#362F4A" stroke-width="1"/>
+
+  <!-- Anarkali Silhouette -->
+  <g transform="translate(300, 160)">
+    <!-- Bodice -->
+    <path d="M-50,20 L50,20 L40,150 L-40,150 Z" fill="#14111B" stroke="#362F4A"/>
+    <path d="M-30,20 Q0,80 30,20" fill="none" stroke="url(#pGold)" stroke-width="2.5"/>
+    
+    <!-- Skirt -->
+    <path d="M-40,150 Q-150,320 -180,530 L180,530 Q150,320 40,150 Z" fill="#0B0A0F" stroke="#262134" stroke-width="1"/>
+    
+    <!-- Gold Kalis & Motifs -->
+    <g stroke="url(#pGold)" stroke-width="1.2" fill="none" opacity="0.8">
+      <line x1="0" y1="150" x2="0" y2="530"/>
+      <line x1="-25" y1="150" x2="-70" y2="530"/>
+      <line x1="25" y1="150" x2="70" y2="530"/>
+      <line x1="-40" y1="150" x2="-130" y2="530"/>
+      <line x1="40" y1="150" x2="130" y2="530"/>
+
+      <line x1="-180" y1="510" x2="180" y2="510" stroke-width="3"/>
+      <line x1="-180" y1="522" x2="180" y2="522" stroke-width="1"/>
+
+      <circle cx="0" cy="260" r="6"/>
+      <circle cx="0" cy="380" r="8"/>
+      <circle cx="-50" cy="340" r="5"/>
+      <circle cx="50" cy="340" r="5"/>
+    </g>
+  </g>
+
+  <!-- Editorial Framing Tag -->
+  <text x="300" y="730" font-family="'Times New Roman', serif" font-size="12" letter-spacing="3" fill="#E6CA65" text-anchor="middle" opacity="0.8">MIDNIGHT VELVET ANARKALI</text>
+</svg>

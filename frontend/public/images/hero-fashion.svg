@@ -1,0 +1,115 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 900" width="100%" height="100%">
+  <defs>
+    <!-- Background Gradient: Obsidian to Deep Velvet -->
+    <radialGradient id="heroBg" cx="65%" cy="40%" r="75%">
+      <stop offset="0%" stop-color="#262134"/>
+      <stop offset="35%" stop-color="#14111B"/>
+      <stop offset="85%" stop-color="#0B0A0F"/>
+    </radialGradient>
+
+    <!-- Warm Gold Aura Glow -->
+    <radialGradient id="goldAura" cx="60%" cy="45%" r="45%">
+      <stop offset="0%" stop-color="#D4AF37" stop-opacity="0.25"/>
+      <stop offset="40%" stop-color="#AA8B2F" stop-opacity="0.12"/>
+      <stop offset="100%" stop-color="#0B0A0F" stop-opacity="0"/>
+    </radialGradient>
+
+    <!-- Golden Thread Metallic Gradient -->
+    <linearGradient id="goldThread" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#E6CA65"/>
+      <stop offset="50%" stop-color="#D4AF37"/>
+      <stop offset="100%" stop-color="#AA8B2F"/>
+    </linearGradient>
+
+    <!-- Silk Sheen Gradient -->
+    <linearGradient id="silkSheen" x1="20%" y1="0%" x2="80%" y2="100%">
+      <stop offset="0%" stop-color="#262134"/>
+      <stop offset="30%" stop-color="#1C1826"/>
+      <stop offset="60%" stop-color="#14111B"/>
+      <stop offset="100%" stop-color="#0B0A0F"/>
+    </linearGradient>
+
+    <filter id="subtleGlow" x="-20%" y="-20%" width="140%" height="140%">
+      <feGaussianBlur stdDeviation="16" result="blur"/>
+      <feComposite in="SourceGraphic" in2="blur" operator="over"/>
+    </filter>
+  </defs>
+
+  <!-- Deep Canvas -->
+  <rect width="1200" height="900" fill="url(#heroBg)"/>
+
+  <!-- Atmospheric Gold Lighting Sphere -->
+  <ellipse cx="780" cy="420" rx="420" ry="360" fill="url(#goldAura)"/>
+
+  <!-- Architectural Background Grids & Frames -->
+  <g opacity="0.15" stroke="#D4AF37" stroke-width="1">
+    <line x1="120" y1="0" x2="120" y2="900"/>
+    <line x1="1080" y1="0" x2="1080" y2="900"/>
+    <line x1="0" y1="780" x2="1200" y2="780"/>
+    <rect x="160" y="80" width="880" height="740" fill="none" stroke="#362F4A" stroke-width="1.5"/>
+    <rect x="180" y="100" width="840" height="700" fill="none" stroke="#D4AF37" stroke-dasharray="4 6" opacity="0.4"/>
+  </g>
+
+  <!-- Editorial Model Silhouette 1: High-Fashion Standing Figure (Women's Couture Drape) -->
+  <g transform="translate(680, 160)">
+    <!-- Aura Rim Light -->
+    <path d="M120,60 Q170,140 180,320 Q190,520 220,700 L20,700 Q60,520 70,320 Q80,140 120,60 Z" fill="#0B0A0F" opacity="0.95"/>
+    <!-- Velvet Silhouette Body -->
+    <path d="M120,60 Q155,130 165,280 Q180,440 210,680 L40,680 Q75,440 85,280 Q95,130 120,60 Z" fill="url(#silkSheen)"/>
+    
+    <!-- Luxurious Gold Thread Embroidery Trace (Zari & Dabka) -->
+    <path d="M120,160 Q140,240 135,340 Q130,460 160,650" fill="none" stroke="url(#goldThread)" stroke-width="2" opacity="0.8"/>
+    <path d="M110,180 Q90,260 100,380 Q110,500 80,660" fill="none" stroke="url(#goldThread)" stroke-width="1.5" opacity="0.7"/>
+
+    <!-- Delicate Atelier Paisley / Floral Motif Patterns -->
+    <g stroke="url(#goldThread)" stroke-width="1" fill="none" opacity="0.6">
+      <circle cx="120" cy="220" r="12"/>
+      <circle cx="120" cy="220" r="6"/>
+      <circle cx="130" cy="300" r="16"/>
+      <circle cx="130" cy="300" r="8"/>
+      <circle cx="125" cy="400" r="22"/>
+      <circle cx="125" cy="400" r="12"/>
+      <circle cx="140" cy="520" r="28"/>
+      <circle cx="140" cy="520" r="14"/>
+    </g>
+
+    <!-- Golden Rim Highlight on Garment Edge -->
+    <path d="M165,280 Q180,440 210,680" fill="none" stroke="#E6CA65" stroke-width="2.5" opacity="0.65" filter="url(#subtleGlow)"/>
+  </g>
+
+  <!-- Editorial Model Silhouette 2: Bespoke Menswear Silhouette (Left Alignment) -->
+  <g transform="translate(480, 190)" opacity="0.85">
+    <!-- Tailored Sherwani Silhouette -->
+    <path d="M110,50 L160,110 L155,290 L170,520 L165,650 L50,650 L45,520 L60,290 L55,110 Z" fill="#14111B" stroke="#362F4A" stroke-width="1"/>
+    <!-- Mandarin Collar / Ban with Gold Trim -->
+    <path d="M90,50 L130,50 L128,70 L92,70 Z" fill="#262134" stroke="url(#goldThread)" stroke-width="1.5"/>
+    <!-- Royal Center Placket with Gold Buttons -->
+    <line x1="110" y1="70" x2="110" y2="460" stroke="url(#goldThread)" stroke-width="2" opacity="0.9"/>
+    <g fill="#E6CA65">
+      <circle cx="110" cy="110" r="3"/>
+      <circle cx="110" cy="140" r="3"/>
+      <circle cx="110" cy="170" r="3"/>
+      <circle cx="110" cy="200" r="3"/>
+      <circle cx="110" cy="230" r="3"/>
+      <circle cx="110" cy="260" r="3"/>
+      <circle cx="110" cy="290" r="3"/>
+    </g>
+    <!-- Pocket Square Accent (Champagne Gold) -->
+    <polygon points="75,135 95,135 90,145 80,145" fill="url(#goldThread)" opacity="0.85"/>
+  </g>
+
+  <!-- Atmospheric Gold Stardust & Micro-Particles -->
+  <g fill="#E6CA65" opacity="0.4">
+    <circle cx="450" cy="280" r="1.5"/>
+    <circle cx="580" cy="180" r="2"/>
+    <circle cx="720" cy="340" r="1.5"/>
+    <circle cx="850" cy="220" r="2.5"/>
+    <circle cx="920" cy="410" r="1.5"/>
+    <circle cx="670" cy="560" r="2"/>
+    <circle cx="820" cy="640" r="1.5"/>
+    <circle cx="1020" cy="310" r="2"/>
+  </g>
+
+  <!-- Editorial Monogram Watermark -->
+  <text x="1000" y="830" font-family="'Times New Roman', serif" font-size="28" letter-spacing="8" fill="#AA8B2F" opacity="0.35" text-anchor="end">NOIR &amp; GOLD ATELIER</text>
+</svg>

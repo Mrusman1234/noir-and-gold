@@ -1,0 +1,67 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 800" width="100%" height="100%">
+  <defs>
+    <radialGradient id="pShawlBg" cx="50%" cy="35%" r="65%">
+      <stop offset="0%" stop-color="#1C1826"/>
+      <stop offset="60%" stop-color="#14111B"/>
+      <stop offset="100%" stop-color="#0B0A0F"/>
+    </radialGradient>
+    <linearGradient id="pGold4" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#E6CA65"/>
+      <stop offset="50%" stop-color="#D4AF37"/>
+      <stop offset="100%" stop-color="#AA8B2F"/>
+    </linearGradient>
+  </defs>
+
+  <rect width="600" height="800" fill="url(#pShawlBg)"/>
+  <rect x="16" y="16" width="568" height="768" fill="none" stroke="#362F4A" stroke-width="1"/>
+
+  <!-- Folded & Draped Luxury Shawl -->
+  <g transform="translate(300, 160)">
+    <!-- Main Velvet Shawl Body -->
+    <path d="M-140,40 Q-160,280 -120,520 L120,520 Q160,280 140,40 Z" fill="#0B0A0F" stroke="#262134" stroke-width="1.5"/>
+    
+    <!-- Elaborate Mughal Border / Pallu (Top & Bottom) -->
+    <rect x="-135" y="60" width="270" height="40" fill="#14111B" stroke="url(#pGold4)" stroke-width="1"/>
+    <rect x="-120" y="460" width="240" height="50" fill="#14111B" stroke="url(#pGold4)" stroke-width="1.2"/>
+
+    <!-- Delicate Zari Geometric Filigree in Pallu -->
+    <g stroke="url(#pGold4)" stroke-width="1" fill="none" opacity="0.85">
+      <line x1="-120" y1="470" x2="120" y2="470"/>
+      <line x1="-120" y1="495" x2="120" y2="495"/>
+      <circle cx="-80" cy="482" r="5"/>
+      <circle cx="-40" cy="482" r="5"/>
+      <circle cx="0" cy="482" r="5"/>
+      <circle cx="40" cy="482" r="5"/>
+      <circle cx="80" cy="482" r="5"/>
+
+      <!-- Center Bootis across the drape -->
+      <circle cx="-60" cy="180" r="4"/>
+      <circle cx="60" cy="180" r="4"/>
+      <circle cx="0" cy="240" r="6"/>
+      <circle cx="-60" cy="300" r="4"/>
+      <circle cx="60" cy="300" r="4"/>
+      <circle cx="0" cy="360" r="6"/>
+      <circle cx="-60" cy="420" r="4"/>
+      <circle cx="60" cy="420" r="4"/>
+    </g>
+
+    <!-- Silk Fringes (Kiran) at Hem -->
+    <g stroke="url(#pGold4)" stroke-width="0.8" opacity="0.75">
+      <line x1="-120" y1="520" x2="-120" y2="540"/>
+      <line x1="-100" y1="520" x2="-100" y2="540"/>
+      <line x1="-80" y1="520" x2="-80" y2="540"/>
+      <line x1="-60" y1="520" x2="-60" y2="540"/>
+      <line x1="-40" y1="520" x2="-40" y2="540"/>
+      <line x1="-20" y1="520" x2="-20" y2="540"/>
+      <line x1="0" y1="520" x2="0" y2="540"/>
+      <line x1="20" y1="520" x2="20" y2="540"/>
+      <line x1="40" y1="520" x2="40" y2="540"/>
+      <line x1="60" y1="520" x2="60" y2="540"/>
+      <line x1="80" y1="520" x2="80" y2="540"/>
+      <line x1="100" y1="520" x2="100" y2="540"/>
+      <line x1="120" y1="520" x2="120" y2="540"/>
+    </g>
+  </g>
+
+  <text x="300" y="730" font-family="'Times New Roman', serif" font-size="12" letter-spacing="3" fill="#E6CA65" text-anchor="middle" opacity="0.8">EMBROIDERED ZARI SHAWL</text>
+</svg>

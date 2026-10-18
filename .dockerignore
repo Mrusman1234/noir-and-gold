@@ -1,0 +1,13 @@
+**/node_modules
+**/.next
+.git
+.gitignore
+**/.env
+**/.env.local
+**/.env.*.local
+docs
+*.log
+*.md
+backend/dist
+backend/prisma/*.bak
+.smoke_*

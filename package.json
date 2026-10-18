@@ -1,0 +1,28 @@
+{
+  "name": "noir-and-gold-monorepo",
+  "version": "1.0.0",
+  "private": true,
+  "workspaces": [
+    "frontend",
+    "backend"
+  ],
+  "scripts": {
+    "frontend:dev": "npm run dev --workspace=frontend",
+    "frontend:build": "npm run build --workspace=frontend",
+    "frontend:lint": "npm run lint --workspace=frontend",
+    "frontend:typecheck": "npm run typecheck --workspace=frontend",
+    "test": "npm run test --workspace=frontend",
+    "backend:dev": "npm run dev --workspace=backend",
+    "backend:build": "npm run build --workspace=backend",
+    "backend:start": "npm run start --workspace=backend",
+    "backend:db:push": "npm run db:push --workspace=backend",
+    "backend:db:seed": "npm run db:seed --workspace=backend"
+  },
+  "overrides": {
+    "braces": "^3.0.3"
+  },
+  "devDependencies": {
+    "@types/pdfkit": "^0.17.6",
+    "pdfkit": "^0.20.2"
+  }
+}

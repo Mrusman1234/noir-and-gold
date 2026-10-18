@@ -1,0 +1,67 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 800" width="100%" height="100%">
+  <defs>
+    <radialGradient id="menBg" cx="50%" cy="30%" r="70%">
+      <stop offset="0%" stop-color="#1C1826"/>
+      <stop offset="45%" stop-color="#14111B"/>
+      <stop offset="100%" stop-color="#0B0A0F"/>
+    </radialGradient>
+    <linearGradient id="goldMetallic" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#E6CA65"/>
+      <stop offset="50%" stop-color="#D4AF37"/>
+      <stop offset="100%" stop-color="#AA8B2F"/>
+    </linearGradient>
+    <linearGradient id="sherwaniVelvet" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#0B0A0F"/>
+      <stop offset="50%" stop-color="#1C1826"/>
+      <stop offset="100%" stop-color="#14111B"/>
+    </linearGradient>
+  </defs>
+
+  <rect width="600" height="800" fill="url(#menBg)"/>
+
+  <!-- Golden Ambient Glow -->
+  <circle cx="300" cy="380" r="220" fill="#D4AF37" opacity="0.10"/>
+
+  <!-- Thin Luxury Framing Line -->
+  <rect x="24" y="24" width="552" height="752" fill="none" stroke="#362F4A" stroke-width="1"/>
+  <rect x="36" y="36" width="528" height="728" fill="none" stroke="#D4AF37" stroke-width="0.8" opacity="0.35"/>
+
+  <!-- Bespoke Sherwani & Waistcoat Silhouette -->
+  <g transform="translate(300, 150)">
+    <!-- Shoulders & Coat Body -->
+    <path d="M-110,30 L-50,-20 L50,-20 L110,30 L95,280 L105,530 L-105,530 L-95,280 Z" fill="url(#sherwaniVelvet)" stroke="#362F4A" stroke-width="1"/>
+    
+    <!-- Mandarin Stand Collar (Ban) -->
+    <path d="M-45,-20 L45,-20 L42,-45 L-42,-45 Z" fill="#262134" stroke="url(#goldMetallic)" stroke-width="1.8"/>
+    <!-- Collar Gold Piping -->
+    <line x1="-42" y1="-45" x2="42" y2="-45" stroke="#E6CA65" stroke-width="2"/>
+
+    <!-- Central Placket with Gold Trim & Royal Buttons -->
+    <rect x="-8" y="-20" width="16" height="420" fill="#14111B" stroke="url(#goldMetallic)" stroke-width="1"/>
+    <g fill="#E6CA65">
+      <circle cx="0" cy="20" r="3.5"/>
+      <circle cx="0" cy="65" r="3.5"/>
+      <circle cx="0" cy="110" r="3.5"/>
+      <circle cx="0" cy="155" r="3.5"/>
+      <circle cx="0" cy="200" r="3.5"/>
+      <circle cx="0" cy="245" r="3.5"/>
+      <circle cx="0" cy="290" r="3.5"/>
+      <circle cx="0" cy="335" r="3.5"/>
+      <circle cx="0" cy="380" r="3.5"/>
+    </g>
+
+    <!-- Chest Pocket & Silk Pocket Square -->
+    <line x1="-75" y1="65" x2="-35" y2="65" stroke="url(#goldMetallic)" stroke-width="2"/>
+    <polygon points="-65,65 -50,45 -35,65" fill="url(#goldMetallic)" opacity="0.9"/>
+
+    <!-- Subtle Geometric Cuffs & Sleeve Trim -->
+    <line x1="-105" y1="360" x2="-80" y2="360" stroke="url(#goldMetallic)" stroke-width="1.5" opacity="0.7"/>
+    <line x1="105" y1="360" x2="80" y2="360" stroke="url(#goldMetallic)" stroke-width="1.5" opacity="0.7"/>
+
+    <!-- Hemline Gold Border -->
+    <line x1="-105" y1="520" x2="105" y2="520" stroke="url(#goldMetallic)" stroke-width="2" opacity="0.8"/>
+  </g>
+
+  <!-- Editorial Text Label Stamp -->
+  <text x="300" y="735" font-family="'Times New Roman', serif" font-size="14" letter-spacing="4" fill="#D4AF37" text-anchor="middle" opacity="0.9">BESPOKE ATELIER &amp; FORMAL</text>
+</svg>

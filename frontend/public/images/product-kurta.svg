@@ -1,0 +1,37 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 800" width="100%" height="100%">
+  <defs>
+    <radialGradient id="pKurtaBg" cx="50%" cy="35%" r="65%">
+      <stop offset="0%" stop-color="#1C1826"/>
+      <stop offset="60%" stop-color="#14111B"/>
+      <stop offset="100%" stop-color="#0B0A0F"/>
+    </radialGradient>
+    <linearGradient id="pGold3" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#E6CA65"/>
+      <stop offset="50%" stop-color="#D4AF37"/>
+      <stop offset="100%" stop-color="#AA8B2F"/>
+    </linearGradient>
+  </defs>
+
+  <rect width="600" height="800" fill="url(#pKurtaBg)"/>
+  <rect x="16" y="16" width="568" height="768" fill="none" stroke="#362F4A" stroke-width="1"/>
+
+  <!-- Kurta Silhouette -->
+  <g transform="translate(300, 160)">
+    <path d="M-80,20 L-35,-10 L35,-10 L80,20 L75,250 L80,520 L-80,520 L-75,250 Z" fill="#14111B" stroke="#262134"/>
+    <!-- Band Collar -->
+    <path d="M-30,-10 L30,-10 L28,-28 L-28,-28 Z" fill="#262134" stroke="url(#pGold3)" stroke-width="1.2"/>
+    <!-- Fine Thread Placket -->
+    <line x1="0" y1="-10" x2="0" y2="280" stroke="url(#pGold3)" stroke-width="1.5"/>
+    <g fill="#E6CA65">
+      <circle cx="0" cy="40" r="2.5"/>
+      <circle cx="0" cy="85" r="2.5"/>
+      <circle cx="0" cy="130" r="2.5"/>
+      <circle cx="0" cy="175" r="2.5"/>
+    </g>
+    <!-- Side Slits (Chak) -->
+    <line x1="-75" y1="280" x2="-80" y2="520" stroke="url(#pGold3)" stroke-width="1" opacity="0.6"/>
+    <line x1="75" y1="280" x2="80" y2="520" stroke="url(#pGold3)" stroke-width="1" opacity="0.6"/>
+  </g>
+
+  <text x="300" y="730" font-family="'Times New Roman', serif" font-size="12" letter-spacing="3" fill="#E6CA65" text-anchor="middle" opacity="0.8">PURE RAW SILK KURTA SET</text>
+</svg>

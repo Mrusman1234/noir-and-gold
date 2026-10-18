@@ -1,0 +1,40 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 800" width="100%" height="100%">
+  <defs>
+    <radialGradient id="pSherwaniBg" cx="50%" cy="35%" r="65%">
+      <stop offset="0%" stop-color="#1C1826"/>
+      <stop offset="60%" stop-color="#14111B"/>
+      <stop offset="100%" stop-color="#0B0A0F"/>
+    </radialGradient>
+    <linearGradient id="pGold2" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#E6CA65"/>
+      <stop offset="50%" stop-color="#D4AF37"/>
+      <stop offset="100%" stop-color="#AA8B2F"/>
+    </linearGradient>
+  </defs>
+
+  <rect width="600" height="800" fill="url(#pSherwaniBg)"/>
+  <rect x="16" y="16" width="568" height="768" fill="none" stroke="#362F4A" stroke-width="1"/>
+
+  <!-- Sherwani Silhouette -->
+  <g transform="translate(300, 160)">
+    <path d="M-90,30 L-40,-10 L40,-10 L90,30 L80,260 L90,520 L-90,520 L-80,260 Z" fill="#0B0A0F" stroke="#262134"/>
+    <!-- Collar -->
+    <path d="M-35,-10 L35,-10 L32,-30 L-32,-30 Z" fill="#1C1826" stroke="url(#pGold2)" stroke-width="1.5"/>
+    <!-- Buttons placket -->
+    <line x1="0" y1="-10" x2="0" y2="420" stroke="url(#pGold2)" stroke-width="1.8"/>
+    <g fill="#E6CA65">
+      <circle cx="0" cy="30" r="3"/>
+      <circle cx="0" cy="70" r="3"/>
+      <circle cx="0" cy="110" r="3"/>
+      <circle cx="0" cy="150" r="3"/>
+      <circle cx="0" cy="190" r="3"/>
+      <circle cx="0" cy="230" r="3"/>
+      <circle cx="0" cy="270" r="3"/>
+      <circle cx="0" cy="310" r="3"/>
+    </g>
+    <!-- Pocket square -->
+    <polygon points="-55,60 -40,42 -25,60" fill="url(#pGold2)"/>
+  </g>
+
+  <text x="300" y="730" font-family="'Times New Roman', serif" font-size="12" letter-spacing="3" fill="#E6CA65" text-anchor="middle" opacity="0.8">ROYAL MONOLITH SHERWANI</text>
+</svg>
